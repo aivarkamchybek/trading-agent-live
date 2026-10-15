@@ -86,26 +86,34 @@ footer p{max-width:76ch}
 .check h3{font-size:19px}
 .when{font-size:13px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
 </style></head><body><div class="page">
-<div class="topbar"><span class="brand"><span class="mark"></span>Trading agent · what it considered</span><span>Updated 14 Oct 2026, 16:20</span></div>
+<div class="topbar"><span class="brand"><span class="mark"></span>Trading agent · what it considered</span><span>Updated 15 Oct 2026, 00:50</span></div>
 <nav class="nav" aria-label="Pages"><a href="./index.html">The account</a><a href="./decisions.html" aria-current="page">What it considered</a><a href="./research.html">The evidence</a></nav>
 <div style="display:flex;flex-direction:column;gap:14px">
 <h1>Every signal it saw, and what it did about it.</h1>
 <p class="standfirst">The account page shows what the agent owns. This one shows the reasoning: each candidate that fired, the numbers it was judged on, and which rule stopped the ones that were not bought. Paper money, really executed.</p></div>
 <section><h2>So far</h2><div class="card"><div class="stats">
-<div class="stat"><span class="n">6</span><span class="k">decisions recorded</span></div>
-<div class="stat"><span class="n">2</span><span class="k">checks</span></div>
+<div class="stat"><span class="n">9</span><span class="k">decisions recorded</span></div>
+<div class="stat"><span class="n">3</span><span class="k">checks</span></div>
 <div class="stat"><span class="n">0</span><span class="k">orders placed</span></div>
 <div class="stat"><span class="n">0</span><span class="k">stopped by the risk gate</span></div>
-<div class="stat"><span class="n">6</span><span class="k">fired outside the buy window</span></div>
+<div class="stat"><span class="n">9</span><span class="k">fired outside the buy window</span></div>
 <div class="stat"><span class="n">$1,000</span><span class="k">account size</span></div>
 </div></div></section>
 <section><h2>Why it did not buy</h2>
 <p class="lead">Every candidate that fired but was not taken, grouped by the rule that stopped it. A gate blocking losers is earning its keep; one blocking winners is costing money — <code>engine/experiments/paper_learning.py</code> measures which.</p>
 <div class="card"><div class="scroller"><table><thead><tr><th>Reason</th><th>Times</th></tr></thead><tbody>
-<tr><td>entry window closed</td><td class="fig">6</td></tr>
+<tr><td>entry window closed</td><td class="fig">9</td></tr>
 </tbody></table></div></div></section>
 <section><h2>Check by check</h2>
-<p class="lead">Newest first, most recent 6 decisions. Every number is what the scan reported at that moment — none is recomputed here.</p>
+<p class="lead">Newest first, most recent 9 decisions. Every number is what the scan reported at that moment — none is recomputed here.</p>
+<div class="card"><div class="check">
+<span class="when">2026-10-14 17:27 ET · manual 2026-10-14 17:26 · buy window closed</span>
+<p class="muted" style="font-size:14px">SPY -1.08% · BTC -1.67% · VIX 16.9</p>
+<div class="scroller"><table><thead><tr><th>Symbol</th><th>Setup</th><th>What happened</th><th>Why</th><th>Price</th><th>Today</th><th>Volume</th><th>RSI-2</th></tr></thead><tbody>
+<tr><td>LITE <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">896.33</td><td class="down">-9.28%</td><td class="fig">1.2×</td><td class="fig">5.8</td></tr>
+<tr><td>CRWD <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">249.29</td><td class="down">-4.56%</td><td class="fig">1.0×</td><td class="fig">9.1</td></tr>
+<tr><td>PYTH <span class="tag">crypto</span></td><td>Momentum</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">0.0849</td><td class="up">+8.79%</td><td class="fig">1.7×</td><td class="fig">80.5</td></tr>
+</tbody></table></div></div></div>
 <div class="card"><div class="check">
 <span class="when">2026-10-14 16:55 ET · manual 2026-10-14 16:55 · buy window closed</span>
 <p class="muted" style="font-size:14px">SPY -1.08% · BTC -1.67% · VIX 16.9</p>
