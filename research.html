@@ -1,0 +1,156 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trading agent — research status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Hanken+Grotesk:wght@400;600;700&display=swap">
+<style>
+:root{--ground:#faf9f5;--card:#fff;--sunk:#f0eee6;--ink:#141413;--ink-soft:#3d3d3a;
+--muted:#6b6a64;--hairline:#e6e3da;--hairline-strong:#d4d0c4;--coral:#d97757;
+--coral-ink:#a9512f;--coral-tint:#f8e7de;--coral-line:#efc3ad;--selection:#f3d5c6;
+--gain:#2e7d4f;--loss:#b42318;--caution:#b7791f;
+--shadow:0 1px 2px rgba(20,20,19,.04),0 2px 8px rgba(20,20,19,.04);
+--serif:"Source Serif 4",Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#262624;
+--card:#30302e;--sunk:#3a3936;--ink:#f5f4ed;--ink-soft:#dcd9cf;--muted:#a8a59b;
+--hairline:#41403c;--hairline-strong:#5c5a53;--coral-ink:#f0a688;--coral-tint:#43302a;
+--coral-line:#6b4536;--selection:#5a3a2c;--gain:#7fc796;--loss:#ff6b86;--caution:#e3b55c;
+--shadow:0 1px 2px rgba(0,0,0,.25)}}
+:root[data-theme="dark"]{--ground:#262624;--card:#30302e;--sunk:#3a3936;--ink:#f5f4ed;
+--ink-soft:#dcd9cf;--muted:#a8a59b;--hairline:#41403c;--hairline-strong:#5c5a53;
+--coral-ink:#f0a688;--coral-tint:#43302a;--coral-line:#6b4536;--selection:#5a3a2c;
+--gain:#7fc796;--loss:#ff6b86;--caution:#e3b55c;--shadow:0 1px 2px rgba(0,0,0,.25)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+::selection{background:var(--selection)}
+.page{max-width:1160px;margin:0 auto;padding:20px clamp(16px,4vw,40px) 56px;
+display:flex;flex-direction:column;gap:44px}
+.topbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}
+.mark{width:11px;height:11px;border-radius:999px;background:var(--coral);flex:none}
+h1{font-family:var(--serif);font-size:clamp(34px,4.4vw,44px);font-weight:420;
+line-height:1.15;letter-spacing:-.015em;margin:0;text-wrap:balance;max-width:26ch}
+.standfirst{font-family:var(--serif);font-size:clamp(19px,2vw,21px);line-height:1.45;
+color:var(--ink-soft);margin:0;max-width:64ch}
+section{display:flex;flex-direction:column;gap:14px}
+h2{font-family:var(--serif);font-size:27px;font-weight:480;letter-spacing:-.01em;margin:0}
+h3{font-family:var(--serif);font-size:20px;font-weight:540;margin:0}
+p{margin:0;max-width:70ch}
+.lead{font-size:17px;color:var(--ink-soft);margin:0;max-width:70ch}
+.card{background:var(--card);border:1px solid var(--hairline);border-radius:16px;
+padding:18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+.note{background:var(--coral-tint);border:1px solid var(--coral-line);border-radius:16px;
+padding:16px 20px}
+.note p{max-width:72ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px 28px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .n{font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.05;
+letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .k{font-size:14px;color:var(--muted)}
+.scroller{overflow-x:auto;margin:0 -20px;padding:0 20px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:9px 12px;border-bottom:1px solid var(--hairline);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:170px}
+thead th{font-size:13px;font-weight:600;color:var(--muted);
+border-bottom:1px solid var(--hairline-strong)}
+tbody tr:last-child td{border-bottom:none}
+tbody td{font-size:15px;color:var(--ink-soft)}
+tbody td:first-child{color:var(--ink)}
+.fig{font-weight:600;color:var(--ink)}
+.up{color:var(--gain);font-weight:600}
+.down{color:var(--loss);font-weight:600}
+.warn{color:var(--caution);font-weight:600}
+.muted{color:var(--muted)}
+.tag{display:inline-block;background:var(--sunk);color:var(--ink-soft);font-size:13px;
+font-weight:600;border-radius:999px;padding:1px 10px}
+ul{margin:0;padding-left:20px;max-width:70ch;display:flex;flex-direction:column;gap:7px}
+li::marker{color:var(--muted)}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.89em;background:var(--sunk);
+border-radius:5px;padding:1px 5px}
+.entry{border-left:2px solid var(--hairline-strong);padding-left:16px;
+display:flex;flex-direction:column;gap:6px}
+.entry .when{font-size:13px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
+footer{border-top:1px solid var(--hairline);padding-top:20px;font-size:14px;color:var(--muted);
+display:flex;flex-direction:column;gap:7px}
+footer p{max-width:76ch}
+:focus-visible{outline:2px solid var(--coral);outline-offset:2px;border-radius:6px}
+@media (max-width:560px){.page{gap:40px}.stat .n{font-size:28px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body><div class="page">
+<div class="topbar"><span class="brand"><span class="mark"></span>Trading agent · research</span><span>Generated 18 Oct 2026, 20:38</span></div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<h1>What has been tested, and what survived.</h1>
+<p class="standfirst">Every figure here comes out of the stored evidence, not from a summary written by hand. Research only: nothing on this page places an order, and the live rules are unchanged.</p></div>
+<section><h2>The evidence base</h2><div class="card"><div class="stats">
+<div class="stat"><span class="n">51</span><span class="k">experiments on record</span></div>
+<div class="stat"><span class="n">11</span><span class="k">rejected, kept with their numbers</span></div>
+<div class="stat"><span class="n">5</span><span class="k">hypotheses never tested</span></div>
+<div class="stat"><span class="n">30</span><span class="k">sources catalogued</span></div>
+<div class="stat"><span class="n">10 of 24</span><span class="k">config parameters traced to evidence</span></div>
+<div class="stat"><span class="n">5</span><span class="k">journal entries</span></div>
+</div></div></section>
+<section><h2>The live rules, across every check</h2>
+<p class="lead">A rule has to pass both the correction for having been chosen from many variants <em>and</em> the out-of-sample check. Failing either reads as unresolved, not as fine. Where a rule has been re-measured by a later, cleaner experiment, the newer figure governs and the older one is shown beneath it.</p>
+<div class="card"><div class="scroller"><table><thead><tr><th>Rule</th><th>Trades</th><th>Per trade (95% CI)</th><th>After the search</th><th>Out of sample</th><th>Decay</th><th>Stable</th><th>Standing</th></tr></thead><tbody>
+<tr><td>stock <span class="tag">PULLBACK</span></td><td class="fig">1,719</td><td><span class="up">+0.34%</span> <span class="muted">(+0.20% … +0.48%)</span></td><td><span class="up">0.998</span></td><td class="up">+0.54%</td><td class="muted">+0.04%</td><td class="fig">yes</td><td class="up">holds</td></tr>
+<tr><td>stock <span class="tag">MOMENTUM</span></td><td class="fig">1,191</td><td><span class="up">+0.30%</span> <span class="muted">(+0.03% … +0.56%)</span></td><td><span class="warn">0.836</span></td><td class="down">-0.21%</td><td class="muted">+0.10%</td><td class="fig">no</td><td class="down">fails both checks</td></tr>
+<tr><td>stock <span class="tag">EARNINGS</span></td><td class="fig">669</td><td><span class="up">+0.46%</span> <span class="muted">(+0.14% … +0.79%)</span></td><td><span class="up">0.988</span></td><td class="up">+0.46%</td><td class="muted">-0.06%</td><td class="fig">no</td><td class="up">holds</td></tr>
+<tr><td>crypto <span class="tag">PULLBACK</span></td><td class="fig">1,139</td><td><span class="down">-0.25%</span> <span class="muted">(-0.71% … +0.21%)</span></td><td><span class="down">0.000</span></td><td class="down">-0.34%</td><td class="muted">+1.63%</td><td class="fig">no</td><td class="muted">correctly rejected</td></tr>
+<tr><td>crypto <span class="tag">MOMENTUM</span></td><td class="fig">1,032</td><td><span class="up">+1.42%</span> <span class="muted">(+0.74% … +2.13%)</span></td><td><span class="up">0.981</span><br><span class="muted" style="font-size:13px">was 0.608; re-measured on 15:00 ET bars against distinct alternatives</span></td><td class="up">+2.26%</td><td class="muted">+0.70%</td><td class="fig">yes</td><td class="up">holds</td></tr>
+</tbody></table></div></div></section>
+<section><h2>Crypto momentum on bars the agent can actually see</h2>
+<p class="lead">The backtest decided on a bar that closes about four hours after the agent does. Three arms, same coins and dates, differing only as labelled.</p>
+<div class="card"><div class="scroller"><table><thead><tr><th>Arm</th><th>Trades</th><th>Per trade</th><th>Beats 0?</th><th>After the search</th></tr></thead><tbody>
+<tr><td>A · Yahoo, UTC close (~20:00 ET) — what backtest.py uses</td><td class="fig">936</td><td class="up">+1.32%</td><td class="fig">yes</td><td class="fig">0.999</td></tr>
+<tr><td>B · bitstamp, 15:00 ET close — what the agent can see</td><td class="fig">654</td><td class="up">+1.09%</td><td class="fig">yes</td><td class="fig">0.981</td></tr>
+<tr><td>C · bitstamp, UTC close — isolates the data source</td><td class="fig">708</td><td class="up">+1.13%</td><td class="fig">yes</td><td class="fig">0.990</td></tr>
+</tbody></table></div></div></section>
+<section><h2>Never tested — where the next experiment comes from</h2>
+<div class="card"><ul>
+<li><strong>Momentum days with a news catalyst drift; days without it reverse.</strong><br><span class="muted">mechanism: Underreaction to news · proxy: <code>an 8-K filed between the previous close and the signal close (edgartools)</code></span></li>
+<li><strong>A weak close (IBS &lt; 0.25) improves the pullback entry.</strong><br><span class="muted">mechanism: Short-term overreaction · proxy: <code>(close - low) / (high - low) &lt; 0.25</code></span></li>
+<li><strong>Entries are worse when price is already extended above its 50-day.</strong><br><span class="muted">mechanism: Greed and FOMO · proxy: <code>(close - sma50) / ATR(14) above a threshold</code></span></li>
+<li><strong>The assumed 0.1%/0.6% round-trip costs understate the real spread.</strong><br><span class="muted">proxy: <code>journal fill price vs the scan price at that check, over 20+ trades</code></span></li>
+<li><strong>Scaling the stop and target by ATR reduces drawdown without cutting return.</strong><br><span class="muted">proxy: <code>stop = entry - k*ATR(14), k in {1.5, 2, 2.5}</code></span></li>
+</ul></div></section>
+<section><h2>Live parameters with no evidence chain</h2>
+<div class="note"><p><strong>14 of 24 parameters in <code>config.json</code> are live and nothing recorded explains why they hold their value.</strong> Some are risk limits the owner simply chose, which is a valid reason; the rest are the honest gap.</p></div>
+<div class="card"><div class="scroller"><table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+<tr><td><code>halt_below_usd</code></td><td class="fig">35</td></tr>
+<tr><td><code>max_daily_loss_usd</code></td><td class="fig">5</td></tr>
+<tr><td><code>max_hold_days</code></td><td class="fig">3</td></tr>
+<tr><td><code>max_new_buys_per_day</code></td><td class="fig">2</td></tr>
+<tr><td><code>max_positions_per_sleeve</code></td><td class="fig">2</td></tr>
+<tr><td><code>max_trade_usd</code></td><td class="fig">12.5</td></tr>
+<tr><td><code>setups.crypto.enabled</code></td><td class="fig">[&quot;MOMENTUM&quot;]</td></tr>
+<tr><td><code>setups.crypto.pullback_rsi2_below</code></td><td class="fig">15</td></tr>
+<tr><td><code>setups.crypto.stop_pct</code></td><td class="fig">8</td></tr>
+<tr><td><code>setups.crypto.trend_sma</code></td><td class="fig">100</td></tr>
+<tr><td><code>setups.stock.enabled</code></td><td class="fig">[&quot;EARNINGS&quot;, &quot;MOMENTUM&quot;, &quot;PULLBACK&quot;]</td></tr>
+<tr><td><code>setups.stock.stop_pct</code></td><td class="fig">5</td></tr>
+<tr><td><code>setups.stock.trend_sma</code></td><td class="fig">200</td></tr>
+<tr><td><code>start_usd</code></td><td class="fig">50</td></tr>
+</tbody></table></div></div></section>
+<section><h2>Library</h2><div class="card"><div class="scroller"><table><thead><tr><th>Stage</th><th>Kind</th><th>Brings</th><th>Count</th></tr></thead><tbody>
+<tr><td class="muted">NOT ACCESSIBLE</td><td>book</td><td>data</td><td class="fig">11</td></tr>
+<tr><td class="muted">NOT ACCESSIBLE</td><td>book</td><td>hypothesis</td><td class="fig">9</td></tr>
+<tr><td class="muted">NOT ACCESSIBLE</td><td>paper</td><td>data</td><td class="fig">8</td></tr>
+<tr><td class="up">VERIFIED</td><td>internal</td><td>data</td><td class="fig">2</td></tr>
+</tbody></table></div>
+</div></section>
+<section><h2>Research journal</h2>
+<p class="lead">Findings, questions and blockers, newest first. Failures stay on the record: a rejected idea is as useful as an accepted one.</p>
+<div class="card" style="gap:22px">
+<div class="entry"><span class="when">2026-10-14 · note</span><h3>No Python on this machine could run the project</h3><p>The interpreter on PATH was an unrelated virtualenv with no pandas, and /usr/bin/python3 is 3.9, too old for yfinance 1.7.0. Only the GitHub Action worked. Fixed with .venv from 3.11; documented in CLAUDE.md.</p></div>
+<div class="entry"><span class="when">2026-10-14 · finding</span><h3>The universe expansion appears to have invalidated part of the rejection table</h3><p>Murphy&#x27;s &#x27;close above the 20-day high&#x27; was rejected on the old 50-stock/10-coin universe (crypto +0.75% vs +1.11%). On the current 200/100 universe it beats the live rule: +1.56% vs +1.21%, DSR 0.622 vs 0.193. The same pattern holds for &#x27;beating SPY/BTC over 100 days&#x27; on stock PULLBACK (+0.50% vs +0.35%). Re-running the whole rejection table on the current universe is now the highest-value cheap experiment.</p></div>
+<div class="entry"><span class="when">2026-10-14 · blocker</span><h3>The research library has no files on disk</h3><p>A filesystem search of the whole home directory found no trading or finance book. The three books credited in RESEARCH.md were read in an earlier session whose files are gone: their conclusions stand, their passages cannot be cited or rechecked. Three public-domain titles (Lefevre 1923, Le Bon 1895, Mackay 1841) can be indexed immediately at no cost.</p></div>
+<div class="entry"><span class="when">2026-10-14 · question</span><h3>Stock dip-buying scores highest but RESEARCH.md treats it as marginal</h3><p>DSR 0.999 and the tightest per-trade interval of any rule (+0.21% to +0.49%). RESEARCH.md kept the support filter mainly for drawdown and rates the setup as weak. Worth understanding before anyone trims it.</p></div>
+<div class="entry"><span class="when">2026-10-14 · finding</span><h3>Two of four live rules do not survive correction for the 45-variant search</h3><p>stock MOMENTUM DSR 0.821 and crypto MOMENTUM DSR 0.193, against 0.999 for stock PULLBACK and 0.983 for stock EARNINGS. Crypto momentum carries essentially the whole 5-year gain in RESEARCH.md. See research/validation/stage1_findings.md.</p></div>
+</div></section>
+<footer>
+<p><strong>Research only.</strong> Nothing here places an order. Live trading stays behind <code>book.py check</code> and the owner's approval on every order.</p>
+<p>Reproduce: <code>.venv/bin/python -m engine.experiments.validate_variants 3</code>, <code>… walk_forward_variants 3</code>, <code>… crypto_timing 3</code>, <code>… engine.graph.backfill</code>, then <code>… engine.reporting.research_page</code>.</p>
+<p>A profitable backtest is not an edge. It is a hypothesis that has not been killed yet.</p>
+</footer></div></body></html>
