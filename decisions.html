@@ -86,16 +86,16 @@ footer p{max-width:76ch}
 .check h3{font-size:19px}
 .when{font-size:13px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
 </style></head><body><div class="page">
-<div class="topbar"><span class="brand"><span class="mark"></span>Trading agent · what it considered</span><span>Updated 20 Oct 2026, 20:50</span></div>
+<div class="topbar"><span class="brand"><span class="mark"></span>Trading agent · what it considered</span><span>Updated 20 Oct 2026, 22:33</span></div>
 <nav class="nav" aria-label="Pages"><a href="./index.html">The account</a><a href="./decisions.html" aria-current="page">What it considered</a><a href="./research.html">The evidence</a></nav>
 <div style="display:flex;flex-direction:column;gap:14px">
 <h1>Every signal it saw, and what it did about it.</h1>
 <p class="standfirst">The account page shows what the agent owns. This one shows the reasoning: each candidate that fired, the numbers it was judged on, and which rule stopped the ones that were not bought. Paper money, really executed.</p></div>
 <section><h2>So far</h2><div class="card"><div class="stats">
-<div class="stat"><span class="n">31</span><span class="k">decisions recorded</span></div>
-<div class="stat"><span class="n">10</span><span class="k">checks</span></div>
+<div class="stat"><span class="n">36</span><span class="k">decisions recorded</span></div>
+<div class="stat"><span class="n">11</span><span class="k">checks</span></div>
 <div class="stat"><span class="n">4</span><span class="k">orders placed</span></div>
-<div class="stat"><span class="n">4</span><span class="k">stopped by the risk gate</span></div>
+<div class="stat"><span class="n">5</span><span class="k">stopped by the risk gate</span></div>
 <div class="stat"><span class="n">9</span><span class="k">fired outside the buy window</span></div>
 <div class="stat"><span class="n">$1,000</span><span class="k">account size</span></div>
 </div></div></section>
@@ -103,33 +103,43 @@ footer p{max-width:76ch}
 <p class="lead">Every candidate that fired but was not taken, grouped by the rule that stopped it. A gate blocking losers is earning its keep; one blocking winners is costing money — <code>engine/experiments/paper_learning.py</code> measures which.</p>
 <div class="card"><div class="scroller"><table><thead><tr><th>Reason</th><th>Times</th></tr></thead><tbody>
 <tr><td>entry window closed</td><td class="fig">9</td></tr>
+<tr><td>gate BLOCKED: already holding WLD</td><td class="fig">2</td></tr>
 <tr><td>gate BLOCKED: already holding DE in the same sector (XLI)</td><td class="fig">2</td></tr>
-<tr><td>gate BLOCKED: already holding WLD</td><td class="fig">1</td></tr>
 <tr><td>gate BLOCKED: already holding CSCO; already holding CSCO in the same sector (XLK)</td><td class="fig">1</td></tr>
 </tbody></table></div></div></section>
 <section><h2>Check by check</h2>
-<p class="lead">Newest first, most recent 31 decisions. Every number is what the scan reported at that moment — none is recomputed here.</p>
+<p class="lead">Newest first, most recent 36 decisions. Every number is what the scan reported at that moment — none is recomputed here.</p>
 <div class="card"><div class="check">
-<span class="when">2026-10-20 16:50 ET · 2026-10-20 16h · buy window open</span>
-<p class="muted" style="font-size:14px">SPY +0.34% · BTC +1.01% · VIX 17.3</p>
+<span class="when">2026-10-20 18:33 ET · 2026-10-20 18h · buy window open</span>
+<p class="muted" style="font-size:14px">SPY +0.34% · BTC +1.37% · VIX 17.3</p>
 <div class="scroller"><table><thead><tr><th>Symbol</th><th>Setup</th><th>What happened</th><th>Why</th><th>Price</th><th>Today</th><th>Volume</th><th>RSI-2</th></tr></thead><tbody>
-<tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="warn">Skipped</td><td class="muted" style="white-space:normal;min-width:220px">gate BLOCKED: already holding WLD</td><td class="fig">0.5881</td><td class="up">+10.34%</td><td class="fig">1.8×</td><td class="fig">95.0</td></tr>
-<tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">0.5881</td><td class="up">+10.34%</td><td class="fig">1.8×</td><td class="fig">95.0</td></tr>
+<tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="warn">Skipped</td><td class="muted" style="white-space:normal;min-width:220px">gate BLOCKED: already holding WLD</td><td class="fig">0.5912</td><td class="up">+10.92%</td><td class="fig">1.8×</td><td class="fig">95.1</td></tr>
+<tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">0.5912</td><td class="up">+10.92%</td><td class="fig">1.8×</td><td class="fig">95.1</td></tr>
 <tr><td>HLT <span class="tag">stock</span></td><td>Momentum</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">359.29</td><td class="up">+3.83%</td><td class="fig">2.7×</td><td class="fig">99.4</td></tr>
 <tr><td>DE <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">632.20</td><td class="up">+0.83%</td><td class="fig">0.7×</td><td class="fig">37.6</td></tr>
 <tr><td>CSCO <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">106.71</td><td class="up">+0.20%</td><td class="fig">0.6×</td><td class="fig">12.6</td></tr>
 </tbody></table></div></div></div>
 <div class="card"><div class="check">
+<span class="when">2026-10-20 16:50 ET · 2026-10-20 16h · buy window open</span>
+<p class="muted" style="font-size:14px">SPY +0.34% · BTC +1.01% · VIX 17.3</p>
+<div class="scroller"><table><thead><tr><th>Symbol</th><th>Setup</th><th>What happened</th><th>Why</th><th>Price</th><th>Today</th><th>Volume</th><th>RSI-2</th></tr></thead><tbody>
+<tr><td>DE <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">632.20</td><td class="up">+0.83%</td><td class="fig">0.7×</td><td class="fig">37.6</td></tr>
+<tr><td>CSCO <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">106.71</td><td class="up">+0.20%</td><td class="fig">0.6×</td><td class="fig">12.6</td></tr>
+<tr><td>HLT <span class="tag">stock</span></td><td>Momentum</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">359.29</td><td class="up">+3.83%</td><td class="fig">2.7×</td><td class="fig">99.4</td></tr>
+<tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">0.5881</td><td class="up">+10.34%</td><td class="fig">1.8×</td><td class="fig">95.0</td></tr>
+<tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="warn">Skipped</td><td class="muted" style="white-space:normal;min-width:220px">gate BLOCKED: already holding WLD</td><td class="fig">0.5881</td><td class="up">+10.34%</td><td class="fig">1.8×</td><td class="fig">95.0</td></tr>
+</tbody></table></div></div></div>
+<div class="card"><div class="check">
 <span class="when">2026-10-20 13:30 ET · 2026-10-20 12h · buy window open</span>
 <p class="muted" style="font-size:14px">SPY +0.38% · BTC +1.01% · VIX 17.7</p>
 <div class="scroller"><table><thead><tr><th>Symbol</th><th>Setup</th><th>What happened</th><th>Why</th><th>Price</th><th>Today</th><th>Volume</th><th>RSI-2</th></tr></thead><tbody>
+<tr><td>CSCO <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">106.36</td><td class="down">-0.13%</td><td class="fig">0.2×</td><td class="fig">1.8</td></tr>
 <tr><td>EMR <span class="tag">stock</span></td><td>Dip buy</td><td class="warn">Skipped</td><td class="muted" style="white-space:normal;min-width:220px">gate BLOCKED: already holding DE in the same sector (XLI)</td><td class="fig">159.40</td><td class="down">-0.71%</td><td class="fig">0.5×</td><td class="fig">9.3</td></tr>
 <tr><td>CSCO <span class="tag">stock</span></td><td>Dip buy</td><td class="warn">Skipped</td><td class="muted" style="white-space:normal;min-width:220px">gate BLOCKED: already holding CSCO; already holding CSCO in the same sector (XLK)</td><td class="fig">106.36</td><td class="down">-0.13%</td><td class="fig">0.2×</td><td class="fig">1.8</td></tr>
 <tr><td>WLD <span class="tag">crypto</span></td><td>Momentum</td><td class="up">Bought</td><td class="muted" style="white-space:normal;min-width:220px">gate OK; bought</td><td class="fig">0.5687</td><td class="up">+6.70%</td><td class="fig">1.6×</td><td class="fig">93.4</td></tr>
 <tr><td>HLT <span class="tag">stock</span></td><td>Momentum</td><td class="up">Bought</td><td class="muted" style="white-space:normal;min-width:220px">gate OK; bought</td><td class="fig">358.37</td><td class="up">+3.56%</td><td class="fig">1.7×</td><td class="fig">99.3</td></tr>
 <tr><td>MMM <span class="tag">stock</span></td><td>Earnings jump</td><td class="warn">Skipped</td><td class="muted" style="white-space:normal;min-width:220px">gate BLOCKED: already holding DE in the same sector (XLI)</td><td class="fig">171.32</td><td class="up">+5.75%</td><td class="fig">1.6×</td><td class="fig">86.1</td></tr>
 <tr><td>DE <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">634.47</td><td class="up">+1.19%</td><td class="fig">0.3×</td><td class="fig">45.3</td></tr>
-<tr><td>CSCO <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Held</td><td class="muted" style="white-space:normal;min-width:220px">no exit signal</td><td class="fig">106.36</td><td class="down">-0.13%</td><td class="fig">0.2×</td><td class="fig">1.8</td></tr>
 </tbody></table></div></div></div>
 <div class="card"><div class="check">
 <span class="when">2026-10-20 08:04 ET · 2026-10-20 07h · buy window open</span>
@@ -163,8 +173,8 @@ footer p{max-width:76ch}
 <span class="when">2026-10-19 13:45 ET · 2026-10-19 13h · buy window open</span>
 <p class="muted" style="font-size:14px">SPY +0.55% · BTC -0.11% · VIX 18.4</p>
 <div class="scroller"><table><thead><tr><th>Symbol</th><th>Setup</th><th>What happened</th><th>Why</th><th>Price</th><th>Today</th><th>Volume</th><th>RSI-2</th></tr></thead><tbody>
-<tr><td>DE <span class="tag">stock</span></td><td>Dip buy</td><td class="up">Bought</td><td class="muted" style="white-space:normal;min-width:220px">gate OK; bought</td><td class="fig">630.64</td><td class="down">-1.75%</td><td class="fig">0.3×</td><td class="fig">8.9</td></tr>
 <tr><td>CSCO <span class="tag">stock</span></td><td>Dip buy</td><td class="up">Bought</td><td class="muted" style="white-space:normal;min-width:220px">gate OK; bought</td><td class="fig">107.11</td><td class="down">-0.26%</td><td class="fig">0.3×</td><td class="fig">2.4</td></tr>
+<tr><td>DE <span class="tag">stock</span></td><td>Dip buy</td><td class="up">Bought</td><td class="muted" style="white-space:normal;min-width:220px">gate OK; bought</td><td class="fig">630.64</td><td class="down">-1.75%</td><td class="fig">0.3×</td><td class="fig">8.9</td></tr>
 </tbody></table></div></div></div>
 <div class="card"><div class="check">
 <span class="when">2026-10-14 17:27 ET · manual 2026-10-14 17:26 · buy window closed</span>
@@ -186,8 +196,8 @@ footer p{max-width:76ch}
 <span class="when">2026-10-14 16:52 ET · manual 2026-10-14 16:51 · buy window closed</span>
 <p class="muted" style="font-size:14px">SPY -1.08% · BTC -1.75% · VIX 16.9</p>
 <div class="scroller"><table><thead><tr><th>Symbol</th><th>Setup</th><th>What happened</th><th>Why</th><th>Price</th><th>Today</th><th>Volume</th><th>RSI-2</th></tr></thead><tbody>
-<tr><td>CRWD <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">249.29</td><td class="down">-4.56%</td><td class="fig">1.0×</td><td class="fig">9.1</td></tr>
 <tr><td>PYTH <span class="tag">crypto</span></td><td>Momentum</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">0.0857</td><td class="up">+9.71%</td><td class="fig">1.7×</td><td class="fig">81.9</td></tr>
+<tr><td>CRWD <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">249.29</td><td class="down">-4.56%</td><td class="fig">1.0×</td><td class="fig">9.1</td></tr>
 <tr><td>LITE <span class="tag">stock</span></td><td>Dip buy</td><td class="muted">Not considered</td><td class="muted" style="white-space:normal;min-width:220px">entry window closed</td><td class="fig">896.33</td><td class="down">-9.28%</td><td class="fig">1.1×</td><td class="fig">5.8</td></tr>
 </tbody></table></div></div></div>
 </section>
